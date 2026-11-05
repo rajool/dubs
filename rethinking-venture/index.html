@@ -122,6 +122,13 @@
         <option value="both">هر دو</option><option value="off">خاموش</option>
       </select>
     </label>
+    <label>سرعت
+      <select id="speed" title="سرعت پخش (Shift و &gt; یا &lt;)">
+        <option value="0.75">۰٫۷۵ برابر</option><option value="1" selected>عادی</option>
+        <option value="1.25">۱٫۲۵ برابر</option><option value="1.5">۱٫۵ برابر</option>
+        <option value="1.75">۱٫۷۵ برابر</option><option value="2">۲ برابر</option>
+      </select>
+    </label>
     <button id="fs" title="تمام‌صفحه (F)">تمام‌صفحه</button>
     <span id="clock">۰:۰۰ / ۴۵:۰۸</span>
   </div>
@@ -152,8 +159,9 @@
   </section>
   <div class="help">
     کلید <kbd>Space</kbd> پخش را متوقف یا شروع می‌کند، <kbd>←</kbd> و <kbd>→</kbd> ده ثانیه جابه‌جا می‌کنند، <kbd>F</kbd> تصویر را تمام‌صفحه می‌کند و <kbd>S</kbd> زیرنویس را عوض می‌کند.
+    سرعت پخش را از منوی «سرعت» تا دو برابر بالا می‌برید، یا با <kbd>Shift</kbd> و <kbd>&gt;</kbd> تندترش و با <kbd>Shift</kbd> و <kbd>&lt;</kbd> کندترش می‌کنید.
     اگر روی خود ویدیو کلیک کنید، کلیدها تا وقتی دوباره روی صفحه کلیک نکنید کار نمی‌کنند. برای جلو و عقب رفتن هم می‌توانید از نوار خود یوتیوب استفاده کنید، چون دوبله خودش را با آن هماهنگ می‌کند.
-    در تماشای هم‌زمان، اگر پخش را نگه دارید یا جای دیگری از ویدیو بروید، از جمع جدا می‌شوید و با دکمه‌ی «برگشت به جمع» دوباره به بقیه می‌رسید.
+    در تماشای هم‌زمان، اگر پخش را نگه دارید، سرعتش را عوض کنید یا جای دیگری از ویدیو بروید، از جمع جدا می‌شوید و با دکمه‌ی «برگشت به جمع» دوباره با سرعت عادی به بقیه می‌رسید.
     صداهای این دوبله را هوش مصنوعی ساخته است.
   </div>
 </div>
@@ -245,7 +253,17 @@
           if (e.data === 1) { try { player.unloadModule("captions"); player.unloadModule("cc"); } catch (x) {} }
           tick();
         },
-        onPlaybackRateChange: function (e) { rate = e.data || 1; audio.playbackRate = rate; }
+        onPlaybackRateChange: function (e) {
+          rate = e.data || 1;
+          setAudioRate(rate);
+          var v = String(rate);
+          if (![].some.call(speedEl.options, function (o) { return o.value === v; })) {   // a rate picked in YouTube's own menu
+            var o = document.createElement("option"); o.value = v; o.textContent = faDigits(v).replace(".", "٫") + " برابر";
+            speedEl.appendChild(o);
+          }
+          speedEl.value = v;
+          if (live && rate !== 1) leave();                  // the group plays at normal speed
+        }
       }
     });
   };
@@ -268,6 +286,11 @@
     setYtVolume(music ? 70 : +bgEl.value);
   }
 
+  function setAudioRate(r) {
+    r = Math.max(0.25, Math.min(2, r));
+    if (Math.abs(audio.playbackRate - r) > 0.001) { try { audio.playbackRate = r; } catch (x) {} }
+  }
+
   function setHeld(on, quiet) {
     if (on === held) return;
     held = on; heldAt = performance.now();
@@ -287,7 +310,7 @@
       if (x >= audio.duration - 0.3) { if (!audio.paused) audio.pause(); return; }
       if (!audio.seeking && Math.abs(d) > 0.6) audio.currentTime = x;
       if (audio.paused) audio.play().catch(function () {});
-      audio.playbackRate = Math.abs(d) > 0.08 ? (d > 0 ? 0.97 : 1.03) : 1;
+      setAudioRate(Math.abs(d) > 0.08 ? (d > 0 ? 0.97 : 1.03) : 1);
       return;
     }
     var end = audio.duration && t > audio.duration - 0.3;
@@ -303,10 +326,12 @@
       }
       waitSince = 0;
       if (audio.paused) {
-        if (Math.abs(drift) > 0.15) { audio.currentTime = t + 0.12; drift = 0.12; }   // the audio starts a beat late
+        if (Math.abs(drift) > 0.15) { audio.currentTime = t + 0.12 * rate; drift = 0.12 * rate; }   // the audio starts a beat late
         audio.play().catch(function () {});
       }
-      audio.playbackRate = Math.abs(drift) > 0.08 ? rate * (drift > 0 ? 0.97 : 1.03) : rate;
+      var want = Math.abs(drift) > 0.08 ? rate * (drift > 0 ? 0.97 : 1.03) : rate;
+      if (want > 2 && drift < -0.25 && !audio.seeking) audio.currentTime = t + 0.1 * rate;   // no room to speed up past 2x: catch up by a jump
+      setAudioRate(want);
     } else {
       waitSince = 0;
       if (!audio.paused) audio.pause();
@@ -348,6 +373,7 @@
   function leave() { if (live) { live = false; prevT = null; showPill(); } }
   function join(lead) {
     live = true; showPill();
+    if (rate !== 1) player.setPlaybackRate(1);
     seekOur(target() + lead);
     player.playVideo();
   }
@@ -568,6 +594,13 @@
   $("mOrig").addEventListener("click", function () { setMode("orig"); });
   volEl.addEventListener("input", function () { audio.volume = +volEl.value / 100; });
   bgEl.addEventListener("input", function () { tick(); });
+  var speedEl = $("speed"), SPEEDS = [0.75, 1, 1.25, 1.5, 1.75, 2];
+  speedEl.addEventListener("change", function () {
+    if (!player || !ready) return;
+    leave();
+    player.setPlaybackRate(+speedEl.value || 1);
+    speedEl.blur();
+  });
   var subSel = $("subsel");
   subSel.addEventListener("change", function () { subMode = subSel.value; lastSubKey = ""; tick(); });
   var stage = $("stage");
@@ -589,6 +622,13 @@
       player.seekTo(Math.max(0, ytTime() + (e.code === "ArrowRight" ? 10 : -10)), true);
     }
     else if (e.code === "KeyF") toggleFs();
+    else if (e.shiftKey && (e.code === "Period" || e.code === "Comma")) {
+      e.preventDefault();
+      var i = SPEEDS.indexOf(rate); if (i < 0) i = 1;
+      i = Math.max(0, Math.min(SPEEDS.length - 1, i + (e.code === "Period" ? 1 : -1)));
+      speedEl.value = String(SPEEDS[i]);
+      speedEl.dispatchEvent(new Event("change"));
+    }
     else if (e.code === "KeyS") {
       var order = ["fa", "en", "both", "off"];
       subSel.value = order[(order.indexOf(subSel.value) + 1) % order.length];
