@@ -1,0 +1,607 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="strict-origin-when-cross-origin">
+<title>دوبله‌ی فارسی: بازاندیشی در سرمایه‌گذاری خطرپذیر</title>
+<meta property="og:title" content="دوبله‌ی فارسی: بازاندیشی در سرمایه‌گذاری خطرپذیر">
+<meta property="og:description" content="گفت‌وگوی همانت تانجا و پکی مک‌کورمیک با دوبله و زیرنویس فارسی">
+<meta property="og:image" content="https://i.ytimg.com/vi/SLnKzhZ_mjY/hqdefault.jpg">
+<style>
+  @font-face { font-family: Vazirmatn; src: url(vazirmatn.woff2) format("woff2"); font-weight: 100 900; font-display: swap; }
+  :root {
+    --bg: #0e0f12; --panel: #17191e; --line: #2a2d35; --text: #eceef2; --muted: #9aa0ab;
+    --accent: #e7b04a; --accent-ink: #1b1406; --sub-bg: rgba(0,0,0,.55);
+  }
+  * { box-sizing: border-box; }
+  [hidden] { display: none !important; }
+  html, body { margin: 0; background: var(--bg); color: var(--text);
+    font-family: Vazirmatn, "Geeza Pro", Tahoma, sans-serif; }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 20px 16px 40px; }
+  header h1 { font-size: clamp(19px, 2.6vw, 28px); font-weight: 700; margin: 0 0 6px; line-height: 1.5; }
+  header p { margin: 0 0 16px; color: var(--muted); font-size: 15px; line-height: 1.9; }
+  #stage { position: relative; width: 100%; aspect-ratio: 16 / 9; background: #000; border-radius: 12px; overflow: hidden; }
+  #stage:fullscreen { border-radius: 0; aspect-ratio: auto; width: 100vw; height: 100vh; }
+  #stage:-webkit-full-screen { border-radius: 0; width: 100vw; height: 100vh; }
+  #yt, #stage iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+  #subs { position: absolute; left: 4%; right: 4%; bottom: 12%; display: flex; flex-direction: column;
+    align-items: center; gap: 6px; pointer-events: none; z-index: 3; }
+  .cue { display: inline-block; max-width: 100%; padding: .18em .6em; border-radius: 6px; background: var(--sub-bg);
+    white-space: pre-line; text-align: center; line-height: 1.6; text-shadow: 0 1px 2px #000; }
+  .cue.fa { font-size: clamp(16px, 2.5vw, 34px); font-weight: 500; direction: rtl; }
+  .cue.en { font-size: clamp(13px, 1.8vw, 24px); direction: ltr; font-family: system-ui, sans-serif; color: #dfe3ea; }
+  #stage:fullscreen .cue.fa { font-size: clamp(22px, 3vw, 46px); }
+  #stage:fullscreen .cue.en { font-size: clamp(16px, 2vw, 30px); }
+  #buf { position: absolute; top: 12px; left: 50%; transform: translateX(-50%); z-index: 3; pointer-events: none;
+    background: rgba(0,0,0,.72); border-radius: 999px; padding: 5px 14px; font-size: 14px; white-space: nowrap; }
+  #gate { position: absolute; inset: 0; z-index: 4; display: flex; align-items: center; justify-content: center;
+    flex-direction: column; gap: 12px; padding: 12px 16px; text-align: center; background: rgba(8,9,11,.78); }
+  #gate .gtitle { font-size: clamp(17px, 2.3vw, 26px); font-weight: 700; }
+  #gate .gline { font-size: clamp(14px, 1.8vw, 19px); line-height: 1.9; max-width: 640px; }
+  #gate .count { font-size: clamp(24px, 4vw, 44px); font-weight: 700; color: var(--accent); }
+  #gate button { font: inherit; font-size: clamp(16px, 2.2vw, 24px); font-weight: 700; border: 0; border-radius: 999px;
+    padding: 12px 30px; background: var(--accent); color: var(--accent-ink); cursor: pointer; }
+  #gate button:disabled { opacity: .55; cursor: progress; }
+  #gate .note { color: var(--muted); font-size: 14px; line-height: 1.8; max-width: 640px; }
+  .bar { display: flex; flex-wrap: wrap; gap: 10px 18px; align-items: center; margin-top: 14px; padding: 12px 14px;
+    background: var(--panel); border: 1px solid var(--line); border-radius: 12px; font-size: 15px; }
+  .bar button, .bar select { font: inherit; color: var(--text); background: #22252c; border: 1px solid var(--line);
+    border-radius: 8px; padding: 6px 12px; cursor: pointer; }
+  .bar button.on { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); font-weight: 700; }
+  .bar label { display: inline-flex; align-items: center; gap: 8px; color: var(--muted); }
+  .bar input[type=range] { width: 120px; accent-color: var(--accent); }
+  .seg { display: inline-flex; border: 1px solid var(--line); border-radius: 9px; overflow: hidden; }
+  .seg button { border: 0; border-radius: 0; }
+  .bar .pill { border-radius: 999px; padding: 5px 14px; }
+  .bar .pill.live { background: #12382b; color: #8fe0b8; border-color: #1f5c45; cursor: default; }
+  .bar .pill.off { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); font-weight: 700; }
+  #clock { margin-inline-start: auto; font-variant-numeric: tabular-nums; color: var(--muted); }
+  .help { color: var(--muted); font-size: 13.5px; line-height: 2; margin-top: 12px; }
+  kbd { font-family: system-ui, sans-serif; font-size: 12px; border: 1px solid var(--line); border-radius: 4px; padding: 0 5px; }
+  h2 { font-size: 16px; font-weight: 700; margin: 0 0 10px; }
+  .party { margin-top: 16px; padding: 14px; background: var(--panel); border: 1px solid var(--line); border-radius: 12px; }
+  .party p { margin: 0 0 12px; color: var(--muted); font-size: 14.5px; line-height: 1.9; }
+  .party .row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 10px; }
+  .party button, .party input { font: inherit; color: var(--text); background: #22252c; border: 1px solid var(--line);
+    border-radius: 8px; padding: 6px 12px; }
+  .party button { cursor: pointer; }
+  .party button.primary { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); font-weight: 700; }
+  .party label { display: inline-flex; align-items: center; gap: 8px; color: var(--muted); }
+  .party input[type=datetime-local] { color-scheme: dark; }
+  #pwhen { color: var(--text); margin-top: 12px; }
+  #purl { flex: 1 1 280px; min-width: 0; direction: ltr; text-align: left; font-family: system-ui, sans-serif; font-size: 13px; }
+  .chapters { margin-top: 16px; }
+  .chapters ol { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 8px; }
+  .chapters button { width: 100%; text-align: right; font: inherit; font-size: 14.5px; line-height: 1.7; color: var(--text);
+    background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 8px 12px; cursor: pointer; display: flex; gap: 10px; }
+  .chapters button .tm { color: var(--muted); font-variant-numeric: tabular-nums; flex: none; }
+  .chapters button.now { border-color: var(--accent); box-shadow: inset 0 0 0 1px var(--accent); }
+  @media (max-width: 640px) {
+    .bar input[type=range] { width: 90px; }
+    #clock { margin-inline-start: 0; }
+    #stage.gated { aspect-ratio: auto; min-height: 270px; }
+    #gate { gap: 8px; }
+    #gate button { padding: 10px 24px; }
+    #gate .note { font-size: 13px; }
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>بازاندیشی در سرمایه‌گذاری خطرپذیر در دوران تمرکز</h1>
+    <p>گفت‌وگوی همانت تانجا، مدیرعامل جنرال کاتالیست، با پکی مک‌کورمیک. ویدیو از خود یوتیوب پخش می‌شود و دوبله‌ی فارسی هم‌زمان با آن روی تصویر می‌نشیند.</p>
+  </header>
+
+  <div id="stage" class="gated">
+    <div id="yt"></div>
+    <div id="subs" aria-live="off"></div>
+    <div id="buf" hidden>در حال بارگیری دوبله…</div>
+    <div id="gate">
+      <div class="gtitle" id="gtitle" hidden></div>
+      <div class="gline" id="gline" hidden></div>
+      <div class="count" id="gcount" hidden></div>
+      <button id="start" disabled>در حال آماده‌سازی…</button>
+      <div class="note" id="gnote"></div>
+    </div>
+  </div>
+
+  <div class="bar">
+    <button id="play" title="پخش یا توقف (فاصله)">پخش</button>
+    <button id="pstat" class="pill" hidden></button>
+    <span class="seg" role="group" aria-label="صدا">
+      <button id="mDub" class="on">دوبله‌ی فارسی</button><button id="mOrig">صدای اصلی</button>
+    </span>
+    <label>صدای اصلی زیر دوبله <input id="bg" type="range" min="0" max="40" value="0"></label>
+    <label>بلندی دوبله <input id="vol" type="range" min="0" max="100" value="100"></label>
+    <label>زیرنویس
+      <select id="subsel">
+        <option value="fa">فارسی</option><option value="en">انگلیسی</option>
+        <option value="both">هر دو</option><option value="off">خاموش</option>
+      </select>
+    </label>
+    <button id="fs" title="تمام‌صفحه (F)">تمام‌صفحه</button>
+    <span id="clock">۰:۰۰ / ۴۵:۰۸</span>
+  </div>
+
+  <section class="party" id="party">
+    <h2>تماشای هم‌زمان با دوستان</h2>
+    <p>اگر دوستانتان جای دیگری هستند، ساعت شروع را انتخاب کنید و پیوند را برایشان بفرستید. هر کس پیوند را باز کند، ویدیو را از همان لحظه‌ای می‌بیند که بقیه می‌بینند، حتی اگر دیرتر برسد، و ساعت شروع را هم به وقت محلی خودش می‌بیند.</p>
+    <div class="row">
+      <button data-min="2">دو دقیقه‌ی دیگر</button>
+      <button data-min="10">ده دقیقه‌ی دیگر</button>
+      <button data-min="30">نیم ساعت دیگر</button>
+      <label>یا ساعت دلخواه <input id="pt" type="datetime-local"></label>
+    </div>
+    <div id="plink" hidden>
+      <div id="pwhen"></div>
+      <div class="row">
+        <input id="purl" readonly aria-label="پیوند تماشای هم‌زمان">
+        <button id="pcopy" class="primary">کپی پیوند</button>
+        <button id="pshare" hidden>فرستادن</button>
+        <button id="popen">باز کردن پیوند</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="chapters">
+    <h2>فصل‌های گفت‌وگو</h2>
+    <ol id="chapters"></ol>
+  </section>
+  <div class="help">
+    کلید <kbd>Space</kbd> پخش را متوقف یا شروع می‌کند، <kbd>←</kbd> و <kbd>→</kbd> ده ثانیه جابه‌جا می‌کنند، <kbd>F</kbd> تصویر را تمام‌صفحه می‌کند و <kbd>S</kbd> زیرنویس را عوض می‌کند.
+    اگر روی خود ویدیو کلیک کنید، کلیدها تا وقتی دوباره روی صفحه کلیک نکنید کار نمی‌کنند. برای جلو و عقب رفتن هم می‌توانید از نوار خود یوتیوب استفاده کنید، چون دوبله خودش را با آن هماهنگ می‌کند.
+    در تماشای هم‌زمان، اگر پخش را نگه دارید یا جای دیگری از ویدیو بروید، از جمع جدا می‌شوید و با دکمه‌ی «برگشت به جمع» دوباره به بقیه می‌رسید.
+    صداهای این دوبله را هوش مصنوعی ساخته است.
+  </div>
+</div>
+
+<audio id="dub" preload="auto"></audio>
+<script>
+(function () {
+  "use strict";
+  var VIDEO_ID = "SLnKzhZ_mjY", DURATION = 2708;
+  var MUSIC_IN = 8.3, MUSIC_OUT = 2703.0;      // intro and outro music play from the original
+  // Only Chromium lets the page unmute the embed without a tap inside it; Safari and Firefox would block or
+  // pause the video, so there the original stays muted and the intro and outro music are skipped
+  var IOS = /iP(hone|ad|od)/.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
+  var MUSIC_OK = !IOS && /Chrome\/|Chromium\//.test(navigator.userAgent);
+  function $(id) { return document.getElementById(id); }
+  var audio = $("dub");
+  var player = null, ready = false, unlocked = false, mode = "dub", dubBroken = false;
+  var subs = { fa: [], en: [] }, subMode = "fa";
+  var lastYt = 0, lastYtAt = 0, rate = 1;
+  var held = false, heldAt = 0, waitSince = 0, holdOffUntil = 0;
+  var party = null, live = false, armed = false, clockOffset = 0, ourSeekAt = -1e9, prevT = null, prevAt = 0;
+  var gateDone = false;
+
+  function faDigits(s) { return String(s).replace(/\d/g, function (d) { return "۰۱۲۳۴۵۶۷۸۹"[d]; }); }
+  function clock(t) { t = Math.max(0, Math.floor(t)); return faDigits(Math.floor(t / 60) + ":" + String(t % 60).padStart(2, "0")); }
+
+  // ---- subtitles -------------------------------------------------------
+  function parseVtt(text) {
+    var out = [], blocks = text.replace(/\r/g, "").split(/\n\n+/);
+    blocks.forEach(function (b) {
+      var m = b.match(/(\d+):(\d+):(\d+\.\d+)\s+-->\s+(\d+):(\d+):(\d+\.\d+)\n([\s\S]*)/);
+      if (!m) return;
+      var a = (+m[1]) * 3600 + (+m[2]) * 60 + parseFloat(m[3]);
+      var z = (+m[4]) * 3600 + (+m[5]) * 60 + parseFloat(m[6]);
+      out.push([a, z, m[7].trim()]);
+    });
+    return out;
+  }
+  function cueAt(list, t) {
+    var lo = 0, hi = list.length - 1;
+    while (lo <= hi) {
+      var mid = (lo + hi) >> 1;
+      if (list[mid][1] < t) lo = mid + 1; else if (list[mid][0] > t) hi = mid - 1; else return list[mid][2];
+    }
+    return "";
+  }
+  var subsEl = $("subs"), lastSubKey = "";
+  function renderSubs(t) {
+    var fa = (subMode === "fa" || subMode === "both") ? cueAt(subs.fa, t) : "";
+    var en = (subMode === "en" || subMode === "both") ? cueAt(subs.en, t) : "";
+    var key = fa + "|" + en;
+    if (key === lastSubKey) return;
+    lastSubKey = key;
+    subsEl.textContent = "";
+    [[en, "en"], [fa, "fa"]].forEach(function (p) {
+      if (!p[0]) return;
+      var d = document.createElement("div"); d.className = "cue " + p[1]; d.textContent = p[0]; subsEl.appendChild(d);
+    });
+  }
+  ["fa", "en"].forEach(function (l) {
+    fetch(l + ".vtt").then(function (r) { return r.text(); }).then(function (t) { subs[l] = parseVtt(t); });
+  });
+
+  // ---- dub audio: streamed, so playback starts at once and seeks fetch only what they need ----
+  audio.src = "dub.m4a";
+  audio.addEventListener("error", function () {
+    dubBroken = true;
+    $("buf").textContent = "صدای دوبله بارگیری نشد. صفحه را دوباره باز کنید.";
+    $("buf").hidden = false;
+    if (ready) setMode("orig");
+  });
+
+  // ---- YouTube player ------------------------------------------------------
+  var tag = document.createElement("script");
+  tag.src = "https://www.youtube.com/iframe_api";
+  document.head.appendChild(tag);
+  window.onYouTubeIframeAPIReady = function () {
+    player = new YT.Player("yt", {
+      videoId: VIDEO_ID,
+      playerVars: { playsinline: 1, rel: 0, fs: 0, cc_load_policy: 0, iv_load_policy: 3, disablekb: 1, origin: location.origin },
+      events: {
+        onReady: function () {
+          ready = true; window.dubPlayer = player; applyVolumes(0);
+          if (dubBroken) setMode("orig");
+          refreshGate();
+        },
+        onStateChange: function (e) {
+          lastYtAt = 0;
+          if (e.data === 1) { try { player.unloadModule("captions"); player.unloadModule("cc"); } catch (x) {} }
+          tick();
+        },
+        onPlaybackRateChange: function (e) { rate = e.data || 1; audio.playbackRate = rate; }
+      }
+    });
+  };
+
+  function ytTime() {
+    // the iframe reports its time in steps; interpolate between reports while playing
+    var t = player.getCurrentTime(), now = performance.now();
+    if (t !== lastYt || !lastYtAt) { lastYt = t; lastYtAt = now; return t; }
+    return player.getPlayerState() === 1 ? lastYt + (now - lastYtAt) / 1000 * rate : lastYt;
+  }
+  var bgEl = $("bg"), volEl = $("vol");
+  function setYtVolume(v) {
+    if (v <= 0) { if (!player.isMuted()) player.mute(); }
+    else { if (player.isMuted()) player.unMute(); player.setVolume(v); }
+  }
+  function applyVolumes(t) {
+    if (!player || !ready) return;
+    if (mode === "orig") { setYtVolume(100); return; }
+    var music = MUSIC_OK && (t < MUSIC_IN || t > MUSIC_OUT);
+    setYtVolume(music ? 70 : +bgEl.value);
+  }
+
+  function setHeld(on, quiet) {
+    if (on === held) return;
+    held = on; heldAt = performance.now();
+    if (!dubBroken) $("buf").hidden = !on;
+    if (on) player.pauseVideo(); else if (!quiet) player.playVideo();
+  }
+
+  // keep the dub on the video's clock; when the dub has no data yet, hold the video until it has
+  function syncDub(st, t, now) {
+    if (mode !== "dub" || !unlocked || dubBroken) {
+      if (!audio.paused) audio.pause();
+      if (held) setHeld(false, true);
+      return;
+    }
+    if (party && live && document.hidden && st !== 1) {
+      var x = target(), d = audio.currentTime - x;
+      if (x >= audio.duration - 0.3) { if (!audio.paused) audio.pause(); return; }
+      if (!audio.seeking && Math.abs(d) > 0.6) audio.currentTime = x;
+      if (audio.paused) audio.play().catch(function () {});
+      audio.playbackRate = Math.abs(d) > 0.08 ? (d > 0 ? 0.97 : 1.03) : 1;
+      return;
+    }
+    var end = audio.duration && t > audio.duration - 0.3;
+    if (st === 1) {
+      if (end) { if (!audio.paused) audio.pause(); waitSince = 0; return; }
+      var drift = audio.currentTime - t;
+      if (!audio.seeking && Math.abs(drift) > 0.6) { audio.currentTime = t; }
+      if (audio.seeking || audio.readyState < 3) {
+        if (!waitSince) waitSince = now;
+        if (now - waitSince > 250 && now > holdOffUntil) { if (!audio.paused) audio.pause(); setHeld(true); }
+        else if (audio.paused) audio.play().catch(function () {});
+        return;
+      }
+      waitSince = 0;
+      if (audio.paused) {
+        if (Math.abs(drift) > 0.15) { audio.currentTime = t + 0.12; drift = 0.12; }   // the audio starts a beat late
+        audio.play().catch(function () {});
+      }
+      audio.playbackRate = Math.abs(drift) > 0.08 ? rate * (drift > 0 ? 0.97 : 1.03) : rate;
+    } else {
+      waitSince = 0;
+      if (!audio.paused) audio.pause();
+      if (!end && !audio.seeking && Math.abs(audio.currentTime - t) > 0.15) audio.currentTime = t;
+      if (held) {
+        if (!audio.seeking && audio.readyState >= 3) setHeld(false);
+        else if (now - heldAt > 6000) { holdOffUntil = now + 15000; setHeld(false); }   // never wait forever
+      }
+    }
+  }
+
+  function tick() {
+    if (!player || !ready) return;
+    var st = player.getPlayerState(), t = ytTime(), now = performance.now();
+    applyVolumes(t);
+    renderSubs(t);
+    markChapter(t);
+    $("clock").textContent = clock(t) + " / " + clock(player.getDuration() || DURATION);
+    $("play").textContent = (st === 1 || held) ? "توقف" : "پخش";
+    if (party) partyTick(st, t, now);
+    syncDub(st, t, now);
+  }
+  setInterval(tick, 120);
+
+  // ---- watch party: everyone's position follows one shared start time ------
+  var hm = location.hash.match(/party=(\d{9,11})/);
+  if (hm) party = { start: +hm[1] };
+  window.addEventListener("hashchange", function () { location.reload(); });
+  document.addEventListener("visibilitychange", function () {
+    if (!document.hidden && party && live && player && ready && player.getPlayerState() !== 1) join(0.6);
+  });
+
+  function nowSec() { return (Date.now() + clockOffset) / 1000; }
+  function target() { return nowSec() - party.start; }
+  function seekOur(x) {
+    ourSeekAt = performance.now(); prevT = null;
+    player.seekTo(Math.max(0, Math.min(x, DURATION - 2)), true);
+  }
+  function leave() { if (live) { live = false; prevT = null; showPill(); } }
+  function join(lead) {
+    live = true; showPill();
+    seekOur(target() + lead);
+    player.playVideo();
+  }
+  function partyTick(st, t, now) {
+    var x = target();
+    if (armed && !gateDone && x >= 0) { unlockAudio(); hideGate(); join(0); return; }   // the scheduled start
+    if (!live) { prevT = null; return; }
+    if (x >= DURATION - 3 || st === 0) { live = false; showPill(); return; }
+    if (st === 2 && !held && now - ourSeekAt > 1500) {
+      if (!document.hidden) leave();                       // the viewer paused; a hidden tab is the browser's doing
+      return;
+    }
+    if (st !== 1) { prevT = null; return; }
+    if (prevT !== null && now - ourSeekAt > 2500) {
+      var expected = prevT + (now - prevAt) / 1000 * rate;
+      if (Math.abs(t - expected) > 3) { leave(); return; }                             // the viewer jumped elsewhere
+    }
+    prevT = t; prevAt = now;
+    if (now - ourSeekAt > 6000 && Math.abs(t - x) > 2) seekOur(x + 0.6);              // drifted from the group
+  }
+  function showPill() {
+    var el = $("pstat");
+    if (!party || !gateDone || target() >= DURATION - 3) { el.hidden = true; return; }
+    el.hidden = false;
+    if (live) { el.className = "pill live"; el.textContent = "همراه جمع"; el.disabled = true; }
+    else { el.className = "pill off"; el.textContent = "برگشت به جمع"; el.disabled = false; }
+  }
+  $("pstat").addEventListener("click", function () {
+    if (!party || live || !player || !ready) return;
+    unlockAudio();
+    if (target() >= 0) { join(0.8); return; }
+    // the group has not started yet: wait with them behind the countdown again
+    player.pauseVideo(); player.seekTo(0, true);
+    armed = true; gateDone = false; $("gate").hidden = false; $("stage").classList.add("gated");
+    $("pstat").hidden = true; refreshGate();
+  });
+
+  // a clock that is clearly wrong is corrected from the server's time; a few seconds of error is left alone
+  if (party) {
+    var t0 = Date.now();
+    fetch(location.pathname + "?clock=" + t0, { method: "HEAD", cache: "no-store" }).then(function (r) {
+      var t1 = Date.now(), d = Date.parse(r.headers.get("Date") || "");
+      if (!d) return;
+      var off = d + (+(r.headers.get("Age") || 0)) * 1000 + 500 - (t0 + t1) / 2;
+      if (Math.abs(off) > 3000) clockOffset = off;
+    }).catch(function () {});
+  }
+
+  var dayFmt = new Intl.DateTimeFormat("fa-IR", { weekday: "long" });
+  var timeFmt = new Intl.DateTimeFormat("fa-IR", { hour: "2-digit", minute: "2-digit", hourCycle: "h23" });
+  function whenText(sec) {
+    var d = new Date(sec * 1000), today = new Date(), tomorrow = new Date();
+    tomorrow.setDate(today.getDate() + 1);
+    var day = d.toDateString() === today.toDateString() ? "امروز"
+      : d.toDateString() === tomorrow.toDateString() ? "فردا" : dayFmt.format(d);
+    return day + " ساعت " + timeFmt.format(d);
+  }
+  function span(sec) {
+    sec = Math.max(0, Math.round(sec));
+    if (sec < 3600) return clock(sec);
+    var h = Math.floor(sec / 3600), m = Math.floor(sec % 3600 / 60);
+    return faDigits(h) + " ساعت" + (m ? " و " + faDigits(m) + " دقیقه" : "");
+  }
+  function ago(sec) {
+    var m = Math.floor(sec / 60);
+    if (m < 1) return "همین چند لحظه پیش";
+    if (m < 60) return faDigits(m) + " دقیقه پیش";
+    return span(sec) + " پیش";
+  }
+
+  // ---- the gate over the video ------------------------------------------
+  var startBtn = $("start");
+  function gateText(id, text) { var el = $(id); el.hidden = !text; el.textContent = text || ""; }
+  function refreshGate() {
+    if (gateDone) return;
+    var x = party ? target() : null;
+    if (!party || x >= DURATION - 3) {
+      gateText("gtitle", party ? "این تماشای هم‌زمان تمام شده است" : "");
+      gateText("gline", party ? "می‌توانید ویدیو را خودتان از اول ببینید." : "");
+      gateText("gcount", "");
+      startBtn.hidden = false;
+      startBtn.disabled = !ready;
+      startBtn.textContent = ready ? "▶ پخش با دوبله‌ی فارسی" : "در حال آماده‌سازی…";
+      gateText("gnote", "صدای ویدیو خودکار قطع می‌شود و دوبله جای آن را می‌گیرد.");
+      return;
+    }
+    gateText("gtitle", "تماشای هم‌زمان");
+    if (x < 0) {
+      gateText("gline", "پخش " + whenText(party.start) + " به وقت شما شروع می‌شود.");
+      gateText("gcount", "تا شروع " + span(-x) + " مانده است");
+      startBtn.hidden = armed;
+      startBtn.disabled = !ready;
+      startBtn.textContent = ready ? "آماده‌ام" : "در حال آماده‌سازی…";
+      gateText("gnote", armed ? "آماده‌اید. این صفحه را باز نگه دارید تا پخش سر وقت خودش شروع شود."
+                              : "دکمه را بزنید تا پخش سر وقت خودش شروع شود.");
+    } else {
+      gateText("gline", "پخش " + ago(x) + " شروع شده است.");
+      gateText("gcount", "");
+      startBtn.hidden = false;
+      startBtn.disabled = !ready;
+      startBtn.textContent = ready ? "پیوستن به بقیه" : "در حال آماده‌سازی…";
+      gateText("gnote", "ویدیو از همان جایی پخش می‌شود که بقیه الان می‌بینند.");
+    }
+  }
+  setInterval(refreshGate, 250);
+  refreshGate();
+  function hideGate() { gateDone = true; $("gate").hidden = true; $("stage").classList.remove("gated"); showPill(); }
+  function unlockAudio() {
+    if (unlocked) return;
+    unlocked = true;
+    // a play() inside the tap lets the page start the dub later on its own (iOS asks for this)
+    var p = audio.play();
+    if (p && p.then) p.then(function () { if (player.getPlayerState() !== 1) audio.pause(); }).catch(function () {});
+  }
+  startBtn.addEventListener("click", function () {
+    if (!player || !ready) return;
+    if (party) {
+      var x = target();
+      if (x < 0) { unlockAudio(); armed = true; refreshGate(); return; }
+      if (x < DURATION - 3) { unlockAudio(); hideGate(); join(0.8); return; }
+    }
+    unlockAudio(); hideGate(); player.playVideo();
+  });
+
+  // ---- chapters (from the video description) ------------------------------
+  var CHAPTERS = [
+    [0, "تعریف تازه‌ی مقیاس در دوران هوش مصنوعی"],
+    [132, "دست کشیدن از بازی بالا بردن ارزش‌گذاری"],
+    [341, "نوآوری مالی، نه مهندسی مالی"],
+    [530, "ساختن بیمارستان هوش‌مصنوعی‌محور در ساما"],
+    [842, "جانوس و آینده‌ی تجربه‌ی مدیریت ثروت"],
+    [1064, "نگاهی دوباره به لایه‌ی مدل"],
+    [1362, "فراوانی، اختیار و واکنش منفی به فناوری"],
+    [1596, "حاکمیت فناوری و زیرساخت جهانی هوش مصنوعی"],
+    [1785, "ساختن شرکت تعیین‌کننده‌ی هر حوزه"],
+    [1881, "اعتماد عمومی، گلوگاه اصلی پیشرفت"],
+    [1997, "خریدن سی سال آرامش"],
+    [2157, "رهبری هوش‌مصنوعی‌محور"],
+    [2336, "برتری آزمایشگاه‌های زنده در سرمایه‌گذاری خطرپذیر"],
+    [2425, "بده‌بستان‌های پیش بردن هم‌زمان چند کار بزرگ"],
+    [2550, "کار عمر هر بنیان‌گذاری ارزشمند است"]
+  ];
+  var chapEl = $("chapters"), chapBtns = [], chapNow = -1;
+  CHAPTERS.forEach(function (c) {
+    var li = document.createElement("li"), b = document.createElement("button");
+    var tm = document.createElement("span"); tm.className = "tm"; tm.textContent = clock(c[0]);
+    var tt = document.createElement("span"); tt.textContent = c[1];
+    b.appendChild(tm); b.appendChild(tt);
+    b.addEventListener("click", function () {
+      if (!player || !ready) return;
+      leave();
+      if (!gateDone) { unlockAudio(); hideGate(); }
+      player.seekTo(c[0], true);
+      player.playVideo();
+    });
+    li.appendChild(b); chapEl.appendChild(li); chapBtns.push(b);
+  });
+  function markChapter(t) {
+    var i = 0;
+    while (i + 1 < CHAPTERS.length && CHAPTERS[i + 1][0] <= t + 0.5) i++;
+    if (i === chapNow) return;
+    if (chapNow >= 0) chapBtns[chapNow].classList.remove("now");
+    chapBtns[i].classList.add("now"); chapNow = i;
+  }
+
+  // ---- making a watch-party link ----------------------------------------
+  if (party) $("party").hidden = true;
+  var pTime = null;
+  function pad(n) { return String(n).padStart(2, "0"); }
+  function setPartyTime(sec) {
+    pTime = sec;
+    var d = new Date(sec * 1000);
+    $("pt").value = d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate()) + "T" + pad(d.getHours()) + ":" + pad(d.getMinutes());
+    $("purl").value = location.origin + location.pathname + "#party=" + sec;
+    $("pwhen").textContent = "پخش " + whenText(sec) + " به وقت شما شروع می‌شود و هر کس ساعت را به وقت خودش می‌بیند.";
+    $("pcopy").textContent = "کپی پیوند";
+    $("plink").hidden = false;
+  }
+  Array.prototype.forEach.call(document.querySelectorAll("#party [data-min]"), function (b) {
+    b.addEventListener("click", function () {
+      setPartyTime(Math.ceil((Date.now() / 1000 + 60 * +b.getAttribute("data-min")) / 60) * 60);
+    });
+  });
+  $("pt").addEventListener("change", function () {
+    var ms = new Date($("pt").value).getTime();
+    if (ms) setPartyTime(Math.floor(ms / 1000));
+  });
+  $("pcopy").addEventListener("click", function () {
+    var url = $("purl").value, btn = $("pcopy");
+    function done() { btn.textContent = "کپی شد"; }
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(url).then(done, function () { $("purl").select(); });
+    else { $("purl").select(); try { document.execCommand("copy"); done(); } catch (e) {} }
+  });
+  if (navigator.share) {
+    $("pshare").hidden = false;
+    $("pshare").addEventListener("click", function () {
+      navigator.share({ title: document.title, url: $("purl").value }).catch(function () {});
+    });
+  }
+  $("popen").addEventListener("click", function () { if (pTime) location.hash = "party=" + pTime; });
+
+  // ---- controls ---------------------------------------------------------
+  function togglePlay() {
+    if (!player || !ready) return;
+    if (!gateDone) { startBtn.click(); return; }
+    if (held) { setHeld(false, true); leave(); return; }
+    if (player.getPlayerState() === 1) { leave(); player.pauseVideo(); }
+    else { unlockAudio(); player.playVideo(); }
+  }
+  $("play").addEventListener("click", togglePlay);
+  function setMode(m) {
+    mode = m;
+    $("mDub").classList.toggle("on", m === "dub");
+    $("mOrig").classList.toggle("on", m === "orig");
+    tick();
+  }
+  $("mDub").addEventListener("click", function () { if (!dubBroken) setMode("dub"); });
+  $("mOrig").addEventListener("click", function () { setMode("orig"); });
+  volEl.addEventListener("input", function () { audio.volume = +volEl.value / 100; });
+  bgEl.addEventListener("input", function () { tick(); });
+  var subSel = $("subsel");
+  subSel.addEventListener("change", function () { subMode = subSel.value; lastSubKey = ""; tick(); });
+  var stage = $("stage");
+  if (!(document.fullscreenEnabled || document.webkitFullscreenEnabled)) $("fs").hidden = true;
+  function toggleFs() {
+    var fsEl = document.fullscreenElement || document.webkitFullscreenElement;
+    if (fsEl) (document.exitFullscreen || document.webkitExitFullscreen).call(document);
+    else if (stage.requestFullscreen || stage.webkitRequestFullscreen) (stage.requestFullscreen || stage.webkitRequestFullscreen).call(stage);
+  }
+  $("fs").addEventListener("click", toggleFs);
+  document.addEventListener("keydown", function (e) {
+    if (!player || !ready) return;
+    var tg = e.target.tagName;
+    if (tg === "SELECT" || tg === "INPUT") return;
+    if (e.code === "Space") { e.preventDefault(); togglePlay(); }
+    else if (e.code === "ArrowRight" || e.code === "ArrowLeft") {
+      e.preventDefault();
+      leave();
+      player.seekTo(Math.max(0, ytTime() + (e.code === "ArrowRight" ? 10 : -10)), true);
+    }
+    else if (e.code === "KeyF") toggleFs();
+    else if (e.code === "KeyS") {
+      var order = ["fa", "en", "both", "off"];
+      subSel.value = order[(order.indexOf(subSel.value) + 1) % order.length];
+      subSel.dispatchEvent(new Event("change"));
+    }
+  });
+
+  window.dubDebug = function () {
+    return { st: player && player.getPlayerState(), t: player && ytTime(), a: audio.currentTime, rs: audio.readyState,
+      paused: audio.paused, held: held, live: live, armed: armed, gateDone: gateDone, unlocked: unlocked,
+      target: party ? target() : null, clockOffset: clockOffset };
+  };
+})();
+</script>
+</body>
+</html>
