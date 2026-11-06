@@ -92,7 +92,7 @@
 <div class="wrap">
   <header>
     <h1>بازاندیشی در سرمایه‌گذاری خطرپذیر در دوران تمرکز</h1>
-    <p>گفت‌وگوی همانت تانجا، مدیرعامل جنرال کاتالیست، با پکی مک‌کورمیک. ویدیو از خود یوتیوب پخش می‌شود و دوبله‌ی فارسی هم‌زمان با آن روی تصویر می‌نشیند.</p>
+    <p>گفت‌وگوی همانت تانجا، مدیرعامل جنرال کاتالیست، با پکی مک‌کورمیک. ویدیو از خود یوتیوب پخش می‌شود و دوبله‌ی فارسی هم‌زمان با آن روی تصویر می‌نشیند. این دوبله غیررسمی است و صدای فارسی هر دو نفر را هوش مصنوعی از روی صدای خودشان ساخته است.</p>
   </header>
 
   <div id="stage" class="gated">
@@ -162,7 +162,6 @@
     سرعت پخش را از منوی «سرعت» تا دو برابر بالا می‌برید، یا با <kbd>Shift</kbd> و <kbd>&gt;</kbd> تندترش و با <kbd>Shift</kbd> و <kbd>&lt;</kbd> کندترش می‌کنید.
     اگر روی خود ویدیو کلیک کنید، کلیدها تا وقتی دوباره روی صفحه کلیک نکنید کار نمی‌کنند. برای جلو و عقب رفتن هم می‌توانید از نوار خود یوتیوب استفاده کنید، چون دوبله خودش را با آن هماهنگ می‌کند.
     در تماشای هم‌زمان، اگر پخش را نگه دارید، سرعتش را عوض کنید یا جای دیگری از ویدیو بروید، از جمع جدا می‌شوید و با دکمه‌ی «برگشت به جمع» دوباره با سرعت عادی به بقیه می‌رسید.
-    صداهای این دوبله را هوش مصنوعی ساخته است.
   </div>
 </div>
 
@@ -171,11 +170,6 @@
 (function () {
   "use strict";
   var VIDEO_ID = "SLnKzhZ_mjY", DURATION = 2708;
-  var MUSIC_IN = 8.3, MUSIC_OUT = 2703.0;      // intro and outro music play from the original
-  // Only Chromium lets the page unmute the embed without a tap inside it; Safari and Firefox would block or
-  // pause the video, so there the original stays muted and the intro and outro music are skipped
-  var IOS = /iP(hone|ad|od)/.test(navigator.userAgent) || (navigator.platform === "MacIntel" && navigator.maxTouchPoints > 1);
-  var MUSIC_OK = !IOS && /Chrome\/|Chromium\//.test(navigator.userAgent);
   function $(id) { return document.getElementById(id); }
   var audio = $("dub");
   var player = null, ready = false, unlocked = false, mode = "dub", dubBroken = false;
@@ -222,11 +216,11 @@
     });
   }
   ["fa", "en"].forEach(function (l) {
-    fetch(l + ".vtt").then(function (r) { return r.text(); }).then(function (t) { subs[l] = parseVtt(t); });
+    fetch(l + ".vtt?v=2").then(function (r) { return r.text(); }).then(function (t) { subs[l] = parseVtt(t); });
   });
 
   // ---- dub audio: streamed, so playback starts at once and seeks fetch only what they need ----
-  audio.src = "dub.m4a";
+  audio.src = "dub.m4a?v=2";
   audio.addEventListener("error", function () {
     dubBroken = true;
     $("buf").textContent = "صدای دوبله بارگیری نشد. صفحه را دوباره باز کنید.";
@@ -244,7 +238,7 @@
       playerVars: { playsinline: 1, rel: 0, fs: 0, cc_load_policy: 0, iv_load_policy: 3, disablekb: 1, origin: location.origin },
       events: {
         onReady: function () {
-          ready = true; window.dubPlayer = player; applyVolumes(0);
+          ready = true; window.dubPlayer = player; applyVolumes();
           if (dubBroken) setMode("orig");
           refreshGate();
         },
@@ -279,11 +273,9 @@
     if (v <= 0) { if (!player.isMuted()) player.mute(); }
     else { if (player.isMuted()) player.unMute(); player.setVolume(v); }
   }
-  function applyVolumes(t) {
+  function applyVolumes() {
     if (!player || !ready) return;
-    if (mode === "orig") { setYtVolume(100); return; }
-    var music = MUSIC_OK && (t < MUSIC_IN || t > MUSIC_OUT);
-    setYtVolume(music ? 70 : +bgEl.value);
+    setYtVolume(mode === "orig" ? 100 : +bgEl.value);      // the dub carries the intro and outro music itself
   }
 
   function setAudioRate(r) {
@@ -346,7 +338,7 @@
   function tick() {
     if (!player || !ready) return;
     var st = player.getPlayerState(), t = ytTime(), now = performance.now();
-    applyVolumes(t);
+    applyVolumes();
     renderSubs(t);
     markChapter(t);
     $("clock").textContent = clock(t) + " / " + clock(player.getDuration() || DURATION);
